@@ -1,4 +1,5 @@
 import React from "react";
+import Form from "./Form";
 
 const Week = () => {
     const weekdays = ["Sun", "Mon", "Tue", " Wed", "Thurs", "Fri", "Sat"];
@@ -7,6 +8,7 @@ const Week = () => {
         // <div className="h-28 w-full flex flex-row gap-x-24 justify-end">
         <div className="w-full flex h-32 ">
             <div className="w-[14%]">
+                <Form />
             </div>
             <div className="w-full grid grid-cols-7 justify-items-center py-4 px-4">
                 {weekdays.map((weekday, index) => {
