@@ -1,5 +1,4 @@
 import Timeline from "./Timeline";
-
 const Grid = () => {
     // const timeSlots = ['9:30 am', '10:30 am', '11:30 am', '12:30 pm'];
     const timeSlots = [];
@@ -15,7 +14,7 @@ const Grid = () => {
     }
 
     return (
-        <div className="h-full overflow-y-scroll pt-5">
+        <div className="h-full overflow-y-scroll">
             <div className="flex">
                 <Timeline timeSlots={timeSlots} />
                 <div className="w-full">
