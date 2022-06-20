@@ -8,7 +8,7 @@ const Grid = (props) => {
 
     const days = [];
 
-    for (let i = 9; i <= 12; i++) {
+    for (let i = 9; i <= 13; i++) {
         timeSlots.push(`${i}:${30} hrs`);
     }
 
@@ -19,7 +19,7 @@ const Grid = (props) => {
     console.log("Hey");
 
     return (
-        <div className="h-full overflow-y-scroll">
+        <div className="h-full overflow-scroll">
             <div className="flex">
                 <Timeline timeSlots={timeSlots} />
                 <div className="w-full">
@@ -30,12 +30,12 @@ const Grid = (props) => {
                                 {days.map((el, index2) => {
                                     return (
                                         <div
-                                            className="py-1 px-1 border-[1px] border-gray-900 h-28 w-[14.28%] inline-block text-center"
+                                            className="border-[1px] border-gray-900 h-28 w-[14.28%] inline-block text-center"
                                             key={index2}
                                         >
                                             {Object.keys(tasks[index1][index2])
                                                 .length !== 0 ? (
-                                                <div className="cursor-default bg-green-300 rounded-lg h-full hover:scale-105 transition-transform duration-300">
+                                                <div className="cursor-default bg-green-300 rounded-tr-lg shadow-xl h-full">
                                                     <h3 className="font-semibold">
                                                         {
                                                             tasks[index1][

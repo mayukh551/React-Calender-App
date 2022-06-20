@@ -2,7 +2,7 @@ import React from "react";
 
 const Timeline = ({ timeSlots }) => {
     return (
-        <div className="h-full w-[15%] text-center">
+        <div className="w-[15%] text-center">
             {timeSlots.map((el, index) => {
                 return (
                     <div
