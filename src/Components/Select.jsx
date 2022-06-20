@@ -10,8 +10,8 @@ const Select = React.forwardRef((props, ref) => {
                 {label}
             </label>
             <select className="rounded-lg py-2 pl-2 mb-6" ref={ref}>
-                {options.map((el) => {
-                    return <option value={`${el}`}>{el}</option>;
+                {options.map((el, index) => {
+                    return <option key={index} value={`${el}`}>{el}</option>;
                 })}
             </select>
         </>

@@ -81,34 +81,44 @@ const FormModal = (props) => {
             return;
         }
 
-        var slot = slotNo.findIndex((el) => el === enteredEndTime);
         var day = weekdays.findIndex((el) => el === enteredDay);
+        var startIndex = slotNo.findIndex((el) => el === enteredStartTime);
+        var endIndex = slotNo.findIndex((el) => el === enteredEndTime);
 
         // There is already an existing task
-        if (Object.keys(tasks[slot][day]).length !== 0) {
-            if (
-                tasks[slot][day].title !== "" &&
-                tasks[slot][day].description !== ""
-            ) {
-                dispactAction({ type: "IF_EXIST", val: true });
-                return;
-            }
+        var count = 0;
+
+        // Checking for empty cells if present
+        for (let i = startIndex + 1; i <= endIndex; i++) {
+            if (Object.keys(tasks[i][day]).length === 0) count = count + 1;
+            else if (
+                Object.keys(tasks[i][day]).length !== 0 &&
+                tasks[i][day].title === ""
+            )
+                count = count + 1;
+        }
+
+        if (count < endIndex - startIndex) {
+            dispactAction({ type: "IF_EXIST", val: true });
+            return;
         }
 
         dispactAction({ type: "IF_EXIST", val: false });
 
-        const newSchedule = {
-            startTime: enteredStartTime,
-            endTime: enteredEndTime,
-            day: enteredDay,
-            title: formState.enteredTitle,
-            description: formState.enteredTask,
-        };
+        for (let i = startIndex + 1; i <= endIndex; i++) {
+            const newSchedule = {
+                startTime: slotNo[i - 1],
+                endTime: slotNo[i],
+                day: enteredDay,
+                title: formState.enteredTitle,
+                description: formState.enteredTask,
+            };
+            props.newTaskHandler(newSchedule, i, day);
+        }
 
         dispactAction({ type: "TITLE_TOUCHED", val: true });
 
         props.onClose();
-        props.newTaskHandler(newSchedule, slot, day);
     };
 
     return (
@@ -125,7 +135,11 @@ const FormModal = (props) => {
             <input
                 type="text"
                 id="title"
-                className={`h-10 rounded-lg py-2 pl-2 ${titleInputHasError ? 'bg-red-300 border-2 border-red-800' : ''}`}
+                className={`h-10 rounded-lg py-2 pl-2 ${
+                    titleInputHasError
+                        ? "bg-red-300 border-2 border-red-800"
+                        : ""
+                }`}
                 onChange={updateTitleInput}
                 onBlur={titleBlurHandler}
                 // ref={taskTitleRef}
