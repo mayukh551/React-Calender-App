@@ -1,5 +1,6 @@
 import React, { useRef, useReducer } from "react";
 import classes from "./FormModal.module.css";
+import Select from "./Select";
 import tasks from "./taskInfo.json";
 
 const formReducer = (state, action) => {
@@ -57,11 +58,6 @@ const FormModal = (props) => {
     const formEventHandler = (event) => {
         event.preventDefault();
 
-        if (!titleIsValid) {
-            dispactAction({ type: "TITLE_TOUCHED", val: true });
-            return;
-        }
-
         var enteredDay = dayRef.current.value;
         var enteredStartTime = startTimeRef.current.value;
         var enteredEndTime = endTimeRef.current.value;
@@ -71,13 +67,19 @@ const FormModal = (props) => {
             enteredStartTime.slice(0, 2) > enteredEndTime.slice(0, 2)
         ) {
             dispactAction({ type: "TIME_SLOT_CONFLICT", val: true });
+            if (!titleIsValid) {
+                dispactAction({ type: "TITLE_TOUCHED", val: true });
+                return;
+            }
             return;
         }
-        console.log(
-            formState.conflictTimeSlot,
-            enteredStartTime,
-            enteredEndTime
-        );
+
+        dispactAction({ type: "TIME_SLOT_CONFLICT", val: false });
+
+        if (!titleIsValid) {
+            dispactAction({ type: "TITLE_TOUCHED", val: true });
+            return;
+        }
 
         var slot = slotNo.findIndex((el) => el === enteredEndTime);
         var day = weekdays.findIndex((el) => el === enteredDay);
@@ -93,6 +95,8 @@ const FormModal = (props) => {
             }
         }
 
+        dispactAction({ type: "IF_EXIST", val: false });
+
         const newSchedule = {
             startTime: enteredStartTime,
             endTime: enteredEndTime,
@@ -102,8 +106,6 @@ const FormModal = (props) => {
         };
 
         dispactAction({ type: "TITLE_TOUCHED", val: true });
-        dispactAction({ type: "IF_EXIST", val: false });
-        dispactAction({ type: "TIME_SLOT_CONFLICT", val: false });
 
         props.onClose();
         props.newTaskHandler(newSchedule, slot, day);
@@ -111,42 +113,19 @@ const FormModal = (props) => {
 
     return (
         <form
-            className={`${classes["anime-form"]} absolute top-16 left-6 h-[530px] w-[380px] shadow-2xl bg-cyan-400 flex flex-col py-5 px-7 rounded-2xl`}
+            className={`${classes["anime-form"]} absolute top-2 left-3 h-[530px] w-[380px] shadow-2xl bg-cyan-400 flex flex-col py-5 px-7 rounded-2xl`}
             onSubmit={formEventHandler}
         >
-            <label htmlFor="" className="text-lg font-semibold mb-2">
-                Choose Week Day
-            </label>
-            <select className="rounded-lg py-2 pl-2 mb-6" ref={dayRef}>
-                {weekdays.map((el) => {
-                    return <option value={`${el}`}>{el}</option>;
-                })}
-            </select>
-
-            <label htmlFor="startTime" className="text-lg font-semibold mb-2">
-                Start Time
-            </label>
-            <select className="rounded-lg py-2 pl-2 mb-6" ref={startTimeRef}>
-                {slotNo.map((el) => {
-                    return <option value={`${el}`}>{el}</option>;
-                })}
-            </select>
-
-            <label htmlFor="endTime" className="text-lg font-semibold mb-2">
-                End Time
-            </label>
-            <select className="rounded-lg py-2 pl-2 mb-6" ref={endTimeRef}>
-                {slotNo.map((el) => {
-                    return <option value={`${el}`}>{el}</option>;
-                })}
-            </select>
+            <Select label={`Choose Week Day`} options={weekdays} ref={dayRef} />
+            <Select label={`Start Time`} options={slotNo} ref={startTimeRef} />
+            <Select label={`End Time`} options={slotNo} ref={endTimeRef} />
             <label htmlFor="title" className="text-lg font-semibold mb-2">
                 Title
             </label>
             <input
                 type="text"
                 id="title"
-                className="h-10 rounded-lg py-2 pl-2"
+                className={`h-10 rounded-lg py-2 pl-2 ${titleInputHasError ? 'bg-red-300 border-2 border-red-800' : ''}`}
                 onChange={updateTitleInput}
                 onBlur={titleBlurHandler}
                 // ref={taskTitleRef}
@@ -172,8 +151,8 @@ const FormModal = (props) => {
                         End Time should come after Start Time
                     </p>
                 )}
-                {formState.isExist && (
-                    <p className="text-sm text-red-600">
+                {!formState.conflictTimeSlot && formState.isExist && (
+                    <p className="text-md text-red-600">
                         Time and Date already occupied
                     </p>
                 )}

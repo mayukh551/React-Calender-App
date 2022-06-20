@@ -16,8 +16,6 @@ const Grid = (props) => {
         days.push(i);
     }
 
-    console.log("Hey");
-
     return (
         <div className="h-full overflow-y-scroll">
             <div className="flex">
@@ -36,14 +34,14 @@ const Grid = (props) => {
                                             {Object.keys(tasks[index1][index2])
                                                 .length !== 0 ? (
                                                 <div className="cursor-default bg-green-300 rounded-tr-lg shadow-xl h-full flex flex-col justify-center">
-                                                    <h3 className="font-semibold">
+                                                    <h3 className="text-sm md:text-base font-semibold">
                                                         {
                                                             tasks[index1][
                                                                 index2
                                                             ].title
                                                         }
                                                     </h3>
-                                                    <h5 className="text-sm">
+                                                    <h5 className="text-xs md:text-sm">
                                                         {`${tasks[index1][index2].startTime} - ${tasks[index1][index2].endTime}`}
                                                     </h5>
                                                 </div>

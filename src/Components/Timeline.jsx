@@ -9,7 +9,7 @@ const Timeline = ({ timeSlots }) => {
                         key={index}
                         className={`${
                             el === "9:30 hrs" ? "h-[122px]" : "h-28"
-                        } flex flex-col justify-end`}
+                        } flex flex-col justify-end font-semibold`}
                     >
                         {el}
                     </div>
