@@ -3,7 +3,8 @@ import Form from "./Form";
 
 const Week = (props) => {
     const weekdays = ["Sun", "Mon", "Tue", " Wed", "Thurs", "Fri", "Sat"];
-    const dayNo = [10, 11, 12, 13, 14, 15, 16];
+    const dayNo = [15, 16, 17, 18, 19, 20, 21];
+
     return (
         // <div className="h-28 w-full flex flex-row gap-x-24 justify-end">
         <div className="relative w-full flex h-32 ">
