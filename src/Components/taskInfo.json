@@ -1,25 +1,25 @@
 [
     [{},
+        {},
+        {},
+        {},
+        {},
+        {},
+        {}
+    ],
+    [{},
         {
-            "time": "9:30 hrs",
+            "startTime": "09:30 hrs",
+            "endTime": "10:30 hrs",
             "day": "Mon",
-            "title": "HW",
-            "description": "Do Maths hw immediately"
+            "title": "Udemy Course"
         },
         {},
-        {},
-        {},
-        {},
-        {}
-    ],
-    [{},
-        {},
-        {},
         {
-            "time": "10:30 hrs",
+            "startTime": "09:30 hrs",
+            "endTime": "10:30 hrs",
             "day": "Wed",
-            "title": "HW",
-            "description": "Do Maths hw immediately"
+            "title": "College Webinar"
         },
         {},
         {},
@@ -32,19 +32,11 @@
         {},
         {},
         {
-            "time": "11:30 hrs",
+            "startTime": "10:30 hrs",
+            "endTime": "11:30 hrs",
             "day": "Sat",
-            "title": "HW",
-            "description": "Do Maths hw immediately"
+            "title": "Tution"
         }
-    ],
-    [{},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {}
     ],
     [{},
         {},

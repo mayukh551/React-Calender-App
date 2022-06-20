@@ -8,7 +8,7 @@ const Grid = (props) => {
 
     const days = [];
 
-    for (let i = 9; i <= 13; i++) {
+    for (let i = 9; i <= 12; i++) {
         timeSlots.push(`${i}:${30} hrs`);
     }
 
@@ -19,7 +19,7 @@ const Grid = (props) => {
     console.log("Hey");
 
     return (
-        <div className="h-full overflow-scroll">
+        <div className="h-full overflow-y-scroll">
             <div className="flex">
                 <Timeline timeSlots={timeSlots} />
                 <div className="w-full">
@@ -35,7 +35,7 @@ const Grid = (props) => {
                                         >
                                             {Object.keys(tasks[index1][index2])
                                                 .length !== 0 ? (
-                                                <div className="cursor-default bg-green-300 rounded-tr-lg shadow-xl h-full">
+                                                <div className="cursor-default bg-green-300 rounded-tr-lg shadow-xl h-full flex flex-col justify-center">
                                                     <h3 className="font-semibold">
                                                         {
                                                             tasks[index1][
@@ -44,11 +44,7 @@ const Grid = (props) => {
                                                         }
                                                     </h3>
                                                     <h5 className="text-sm">
-                                                        {
-                                                            tasks[index1][
-                                                                index2
-                                                            ].description
-                                                        }
+                                                        {`${tasks[index1][index2].startTime} - ${tasks[index1][index2].endTime}`}
                                                     </h5>
                                                 </div>
                                             ) : (

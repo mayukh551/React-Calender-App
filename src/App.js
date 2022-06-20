@@ -11,8 +11,8 @@ function App() {
 	const newTaskHandler = (newTask, slot, day) => {
 
 		taskSchedule[slot][day].day = newTask.day;
-		taskSchedule[slot][day].description = newTask.description;
-		taskSchedule[slot][day].time = newTask.time;
+		taskSchedule[slot][day].startTime = newTask.startTime;
+		taskSchedule[slot][day].endTime = newTask.endTime;
 		taskSchedule[slot][day].title = newTask.title;
 
 		setTaskSchedule([...taskSchedule]);
