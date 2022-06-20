@@ -1,35 +1,67 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useReducer } from "react";
 import classes from "./FormModal.module.css";
 import tasks from "./taskInfo.json";
 
+const formReducer = (state, action) => {
+    if (action.type === "UPDATE_TITLE")
+        return {
+            ...state,
+            enteredTitle: action.val,
+        };
+    else if (action.type === "UPDATE_TASK")
+        return {
+            ...state,
+            enteredTask: action.val,
+        };
+    else if (action.type === "TASK_TOUCHED")
+        return {
+            ...state,
+            isTaskInputTouched: action.val,
+        };
+    else if (action.type === "TITLE_TOUCHED")
+        return {
+            ...state,
+            isTitleInputTouched: action.val,
+        };
+    else if (action.type === "IF_EXIST") {
+        return {
+            ...state,
+            isExist: action.val,
+        };
+    }
+
+    return state;
+};
+
 const FormModal = (props) => {
-    const [isExist, setIsExist] = useState(false);
+    const [formState, dispactAction] = useReducer(formReducer, {
+        isExist: false,
+        enteredTask: "",
+        isTaskInputTouched: false,
+        enteredTitle: "",
+        isTitleInputTouched: false,
+    });
 
-    const [enteredTask, setEnteredTask] = useState("");
-    const [isTaskInputTouched, setIsTaskInputTouched] = useState(false);
-    const [enteredTitle, setEnteredTitle] = useState("");
-    const [isTitleInputTouched, setIsTitleInputTouched] = useState(false);
+    const taskIsValid = formState.enteredTask.trim() !== "";
+    const taskInputHasError = !taskIsValid && formState.isTaskInputTouched;
 
-    const taskIsValid = enteredTask.trim() !== "";
-    const taskInputHasError = !taskIsValid && isTaskInputTouched;
-
-    const titleIsValid = enteredTitle.trim() !== "";
-    const titleInputHasError = !titleIsValid && isTitleInputTouched;
+    const titleIsValid = formState.enteredTitle.trim() !== "";
+    const titleInputHasError = !titleIsValid && formState.isTitleInputTouched;
 
     const updateTitleInput = (event) => {
-        setEnteredTitle(event.target.value);
+        dispactAction({ type: "UPDATE_TITLE", val: event.target.value });
     };
 
     const titleBlurHandler = () => {
-        setIsTitleInputTouched(true);
+        dispactAction({ type: "TITLE_TOUCHED", val: true });
     };
 
     const updateTaskInput = (event) => {
-        setEnteredTask(event.target.value);
+        dispactAction({ type: "UPDATE_TASK", val: event.target.value });
     };
 
     const taskBlurHandler = () => {
-        setIsTaskInputTouched(true);
+        dispactAction({ type: "TASK_TOUCHED", val: true });
     };
 
     const dayRef = useRef();
@@ -39,8 +71,8 @@ const FormModal = (props) => {
         event.preventDefault();
 
         if (!taskIsValid || !titleIsValid) {
-            setIsTaskInputTouched(true);
-            setIsTitleInputTouched(true);
+            dispactAction({ type: "TITLE_TOUCHED", val: true });
+            dispactAction({ type: "TASK_TOUCHED", val: true });
             return;
         }
 
@@ -59,7 +91,7 @@ const FormModal = (props) => {
                 tasks[slot][day].title !== "" &&
                 tasks[slot][day].description !== ""
             ) {
-                setIsExist(true);
+                dispactAction({ type: "IF_EXIST", val: true });
                 return;
             }
         }
@@ -67,12 +99,13 @@ const FormModal = (props) => {
         const newSchedule = {
             time: enteredTime,
             day: enteredDay,
-            title: enteredTitle,
-            description: enteredTask,
+            title: formState.enteredTitle,
+            description: formState.enteredTask,
         };
 
-        setIsTaskInputTouched(false);
-        setIsTitleInputTouched(false);
+        dispactAction({ type: "TITLE_TOUCHED", val: true });
+        dispactAction({ type: "TASK_TOUCHED", val: true });
+        dispactAction({ type: "IF_EXIST", val: false });
 
         props.onClose();
         props.newTaskHandler(newSchedule);
@@ -95,7 +128,6 @@ const FormModal = (props) => {
                 <option value="Fri">Fri</option>
                 <option value="Sat">Sat</option>
             </select>
-            {/* <input type="date" name="" id="" className="rounded-lg py-2 pl-2" /> */}
             <label htmlFor="timeSlot" className="text-lg font-semibold">
                 Choose Time Slot
             </label>
@@ -104,7 +136,6 @@ const FormModal = (props) => {
                 <option value="10:30 hrs">10:30 hrs</option>
                 <option value="11:30 hrs">11:30 hrs</option>
             </select>
-            {/* <input type="text" id="timeSlot" className="rounded-lg py-2 pl-2" /> */}
             <label htmlFor="title" className="text-lg font-semibold">
                 Title
             </label>
@@ -146,7 +177,7 @@ const FormModal = (props) => {
                 >
                     Add
                 </button>
-                {isExist && (
+                {formState.isExist && (
                     <p className="text-sm text-red-500">
                         Time and Date already occupied
                     </p>
