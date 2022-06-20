@@ -67,6 +67,9 @@ const FormModal = (props) => {
     const dayRef = useRef();
     const timeRef = useRef();
 
+    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
+    const slotNo = ["9:30 hrs", "10:30 hrs", "11:30 hrs", "12:30 hrs"];
+
     const formEventHandler = (event) => {
         event.preventDefault();
 
@@ -78,9 +81,6 @@ const FormModal = (props) => {
 
         var enteredDay = dayRef.current.value;
         var enteredTime = timeRef.current.value;
-
-        const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
-        const slotNo = ["9:30 hrs", "10:30 hrs", "11:30 hrs"];
 
         var slot = slotNo.findIndex((el) => el === enteredTime);
         var day = weekdays.findIndex((el) => el === enteredDay);
@@ -108,7 +108,7 @@ const FormModal = (props) => {
         dispactAction({ type: "IF_EXIST", val: false });
 
         props.onClose();
-        props.newTaskHandler(newSchedule);
+        props.newTaskHandler(newSchedule, slot, day);
     };
 
     return (
@@ -120,21 +120,17 @@ const FormModal = (props) => {
                 Choose Week Day
             </label>
             <select className="rounded-lg py-2 pl-2" ref={dayRef}>
-                <option value="Sun">Sun</option>
-                <option value="Mon">Mon</option>
-                <option value="Tue">Tue</option>
-                <option value="Wed">Wed</option>
-                <option value="Thurs">Thurs</option>
-                <option value="Fri">Fri</option>
-                <option value="Sat">Sat</option>
+                {weekdays.map((el) => {
+                    return <option value={`${el}`}>{el}</option>;
+                })}
             </select>
             <label htmlFor="timeSlot" className="text-lg font-semibold">
                 Choose Time Slot
             </label>
             <select className="rounded-lg py-2 pl-2" ref={timeRef}>
-                <option value="9:30 hrs">9:30 hrs</option>
-                <option value="10:30 hrs">10:30 hrs</option>
-                <option value="11:30 hrs">11:30 hrs</option>
+                {slotNo.map((el) => {
+                    return <option value={`${el}`}>{el}</option>;
+                })}
             </select>
             <label htmlFor="title" className="text-lg font-semibold">
                 Title

@@ -8,7 +8,7 @@ const Grid = (props) => {
 
     const days = [];
 
-    for (let i = 9; i <= 11; i++) {
+    for (let i = 9; i <= 12; i++) {
         timeSlots.push(`${i}:${30} hrs`);
     }
 
@@ -20,38 +20,37 @@ const Grid = (props) => {
 
     return (
         <div className="h-full overflow-y-scroll">
-            {console.log(tasks)}
             <div className="flex">
                 <Timeline timeSlots={timeSlots} />
                 <div className="w-full">
                     {tasks.map((days, index1) => {
                         return (
                             // for every time slot, display 7 days
-                            <div className="w-full flex flex-grow" key={index1}>
+                            <div className="w-full flex" key={index1}>
                                 {days.map((el, index2) => {
                                     return (
                                         <div
-                                            className="py-3 px-2 border-[0.1px] border-gray-900 h-28 w-[14.28%] inline-block text-center"
+                                            className="py-1 px-1 border-[1px] border-gray-900 h-28 w-[14.28%] inline-block text-center"
                                             key={index2}
                                         >
                                             {Object.keys(tasks[index1][index2])
                                                 .length !== 0 ? (
-                                                <>
-                                                    <h3>
+                                                <div className="cursor-default bg-green-300 rounded-lg h-full hover:scale-105 transition-transform duration-300">
+                                                    <h3 className="font-semibold">
                                                         {
                                                             tasks[index1][
                                                                 index2
                                                             ].title
                                                         }
                                                     </h3>
-                                                    <h5>
+                                                    <h5 className="text-sm">
                                                         {
                                                             tasks[index1][
                                                                 index2
                                                             ].description
                                                         }
                                                     </h5>
-                                                </>
+                                                </div>
                                             ) : (
                                                 ""
                                             )}
