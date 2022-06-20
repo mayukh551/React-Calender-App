@@ -6,7 +6,6 @@ const Week = (props) => {
     const dayNo = [15, 16, 17, 18, 19, 20, 21];
 
     return (
-        // <div className="h-28 w-full flex flex-row gap-x-24 justify-end">
         <div className="relative w-full flex h-32 ">
             <div className="w-[14%]">
                 <Form newTaskHandler={props.newTaskHandler} />
