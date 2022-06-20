@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormModal from "./FormModal";
 
-const Form = () => {
+const Form = (props) => {
     const [addTask, setAddTask] = useState(false);
     const showFormHandler = () => {
         setAddTask((prevTask) => !prevTask);
@@ -18,7 +18,12 @@ const Form = () => {
                         Add Task
                     </button>
                 )}
-                {addTask && <FormModal onClose={showFormHandler}/>}
+                {addTask && (
+                    <FormModal
+                        onClose={showFormHandler}
+                        newTaskHandler={props.newTaskHandler}
+                    />
+                )}
             </div>
         </>
     );

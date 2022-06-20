@@ -5,7 +5,7 @@
 @keyframes animate-form {
     from {
         opacity: 0;
-        transform: translateX(-3em);
+        transform: translateX(-10em);
     }
 
     to {

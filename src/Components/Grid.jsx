@@ -1,51 +1,8 @@
 import Timeline from "./Timeline";
-const Grid = () => {
+const Grid = (props) => {
     // const timeSlots = ['9:30 am', '10:30 am', '11:30 am', '12:30 pm'];
 
-    const tasks = [
-        [
-            {},
-            {
-                time: "9:30 hrs",
-                day: "Mon",
-                title: "HW",
-                description: "Do Maths hw immediately",
-            },
-            {},
-            {},
-            {},
-            {},
-            {},
-        ],
-        [
-            {},
-            {},
-            {},
-            {
-                time: "10:30 hrs",
-                day: "Wed",
-                title: "HW",
-                description: "Do Maths hw immediately",
-            },
-            {},
-            {},
-            {},
-        ],
-        [
-            {},
-            {},
-            {},
-            {},
-            {},
-            {},
-            {
-                time: "11:30 hrs",
-                day: "Sat",
-                title: "HW",
-                description: "Do Maths hw immediately",
-            },
-        ],
-    ];
+    const tasks = props.taskSchedule;
 
     const timeSlots = [];
 
@@ -59,22 +16,24 @@ const Grid = () => {
         days.push(i);
     }
 
+    console.log("Hey");
+
     return (
         <div className="h-full overflow-y-scroll">
+            {console.log(tasks)}
             <div className="flex">
                 <Timeline timeSlots={timeSlots} />
                 <div className="w-full">
-                    {timeSlots.map((e1, index1) => {
+                    {tasks.map((days, index1) => {
                         return (
                             // for every time slot, display 7 days
-                            <div className="w-full flex flex-grow" key={e1}>
+                            <div className="w-full flex flex-grow" key={index1}>
                                 {days.map((el, index2) => {
                                     return (
                                         <div
                                             className="py-3 px-2 border-[0.1px] border-gray-900 h-28 w-[14.28%] inline-block text-center"
-                                            key={el}
+                                            key={index2}
                                         >
-                                            {console.log(index1, index2)}
                                             {Object.keys(tasks[index1][index2])
                                                 .length !== 0 ? (
                                                 <>
